@@ -10,6 +10,9 @@ properly. NestJS + MongoDB API underneath, React frontend on top.
 - **Due-date reminders** — real browser push notifications, delivered even if the tab or browser is closed, as long as permission was granted
 - **Recurring tasks** — daily, weekly (pick specific weekdays), or monthly, with an optional end date; completing one instance generates the next automatically
 - **Subtasks** — a checklist inside any todo
+- **Drag-and-drop reordering** — manual ordering that survives reloads and syncs across devices
+- **Calendar view** — a month grid showing todos on their due date
+- **Shared lists** — share your list with another registered user at view or edit access
 - **Search, filter, and sort** — by status, priority, and free-text search, all server-side
 - **Free-form categories** — not locked into a fixed list
 
@@ -75,6 +78,16 @@ days). When you complete an occurrence, the next one is generated
 automatically with its due date and reminder shifted forward by the same
 rule — your completed history stays intact rather than being overwritten.
 
+## How sharing works
+
+From the **Share** button, grant another registered user "can view" or
+"can edit" access to your whole list by email. They'll see it as an option
+in their list switcher. View access lets them see and check things off;
+edit access lets them add, edit, delete, and reorder too. Revoke access
+any time from the same panel. Note: push reminders currently only fire to
+the todo's actual owner, not everyone with access to a shared list — see
+`STATUS.md`.
+
 ## Environment variables
 
 **`backend/.env`**
@@ -102,13 +115,17 @@ deployed frontend's origin exactly, or CORS will block requests.
 
 ## What's not built yet
 
-Shared/collaborative lists, a calendar view, drag-and-drop reordering, and
-PWA installability — see `compare.md` for the full competitive gap analysis
-and `PHASES.md` for what's planned next.
+PWA installability, email-based reminders as a push fallback, per-todo
+sharing (currently whole-list only), and touch/mobile drag-and-drop
+(reordering currently needs a mouse — see `STATUS.md`) — see `compare.md`
+for the full competitive gap analysis and `PHASES.md` for what's planned
+next.
 
 ## Status
 
-Backend and frontend both build and lint clean, and the recurrence logic is
-unit-tested. Endpoint-level testing against a live database is the one thing
-that hasn't been run yet — see `STATUS.md` for the exact walkthrough to do
-that before treating this as production-ready.
+Backend and frontend both build and lint clean, and the recurrence and
+ordering logic are unit-tested (12/12 passing). Endpoint-level testing
+against a live database is the one thing that hasn't been run yet — see
+`STATUS.md` for the exact walkthrough to do that before treating this as
+production-ready, including a specific checklist for sharing and
+drag-and-drop.
